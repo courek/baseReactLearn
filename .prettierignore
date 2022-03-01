@@ -1,0 +1,21 @@
+// 为了统一每个开发者的格式化都一样. 所以使用prettier 依赖(不是安装的插件,是依赖)  https://prettier.io/docs/en/install.html
+// 然后为了每次保存提交都会自动格式化多加安装了 Pre-commit Hook, 继续按文档走
+
+// 每个人的本地格式化可能都不一样. 但是提交到git上的格式一样就行了.
+
+// husky 依赖是指运行 ,pre-commit阶段,在commit之前,运行lint-staged
+
+// eslint和prettier 有点冲突,所以要为了eslint进行配置一下.  安装 eslint-config-prettier 然后在 修改package.json文件,
+// 在eslintConfig下,添加 prettier, 意思是覆盖部分的react自带的eslint格式化.  这样就能两种都正常工作,不会冲突了.
+
+
+// 还需要添加一个commitlint, 也就是每次我们commit的时候都会去帮我们检查. commit message 是否符合一定的规范. https://github.com/conventional-changelog/commitlint
+
+// 当前项目的 提交规则 /config-conventional
+
+
+// 这个文件是指不需要 prettier 格式化的文件
+
+# Ignore artifacts:
+build
+coverage
