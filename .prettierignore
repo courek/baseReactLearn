@@ -11,6 +11,8 @@
 
 // 还需要添加一个commitlint, 也就是每次我们commit的时候都会去帮我们检查. commit message 是否符合一定的规范. https://github.com/conventional-changelog/commitlint
 
+// 当前项目的 提交规则 /config-conventional
+
 
 // 这个文件是指不需要 prettier 格式化的文件
 
