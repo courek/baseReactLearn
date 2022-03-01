@@ -27,3 +27,5 @@ export const List = ({ users, list }) => {
     </table>
   );
 };
+
+//  使用custom hook 提取并且复用组件代码
