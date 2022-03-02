@@ -10,6 +10,8 @@ import { cleanObject, useDebounce } from "../../utils";
 // 当运行,npm start 会读取到的是 .evn.develoopment 文件的 REACT_APP_API_URL
 // 当执行 npm run build  会读取到的是 .evn 文件的 REACT_APP_API_URL
 
+// 使用js  大部分的错误都是在 runtime(运行执行的时候) 的时候发现的
+// 希望在静态代码中就能查到错误   于是 TS 就有用了
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const ProjectScreen = () => {
@@ -34,6 +36,8 @@ const ProjectScreen = () => {
     // 这种形式肯定不好了,只是后期再换吧.  添加qs插件拿来序列化参数
     // 状态提升 后自组件设置了 setParam 也能触发这个,因为这个 是等于监听了param的变化.  所以当在这个页面定义了param,用到param的子组件,一发生改变,
     // 这里的useEffect都能触发?
+
+    //@ts-ignore --- 加上这句可以忽略检查
     fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debounceParams))}`)
       .then(async (response) => await response.json())
       .then((data) => {
