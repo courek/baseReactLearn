@@ -54,7 +54,9 @@ export const useMount = (callback: () => void) => {
 // };
 
 // 方便形式的hook,高级到看不懂.  一个custom hook是需要在里面用到其他的hook 如果都用不到hook 那没必要写hook 函数也挺好的
-export const useDebounce = (value: unknown, delay?: number) => {
+
+// export const useDebounce = (value: unknown, delay?: number): any => {  // 每家范型 约束
+export const useDebounce = <T>(value: T, delay?: number) => {
   const [debounceValue, setDebounceValue] = useState(value);
   useEffect(() => {
     // 每次在value变化后才会设置数据

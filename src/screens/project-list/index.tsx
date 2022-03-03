@@ -37,7 +37,7 @@ const ProjectScreen = () => {
     // 状态提升 后自组件设置了 setParam 也能触发这个,因为这个 是等于监听了param的变化.  所以当在这个页面定义了param,用到param的子组件,一发生改变,
     // 这里的useEffect都能触发?
 
-    //@ts-ignore --- 加上这句可以忽略检查
+    //// @ts-ignore --- 加上这句可以忽略检查
     fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debounceParams))}`)
       .then(async (response) => await response.json())
       .then((data) => {
@@ -69,5 +69,18 @@ const ProjectScreen = () => {
     </div>
   );
 };
+
+// 元组形式的数组的好处就是 长度固定,所以解构的时候可以随便改名字
+/* 比如
+
+    let a = [1,"w",true ]  
+    //解构就可以
+    let [isOne,isW, isBoolean] = a;  // 完全可以这样取值. 因为固定长度. 所以能匹配得上  
+
+    //但是只有元组类型才得  不然对象解构改名字的形式不变.
+
+
+  任何类型都可以赋值给 unknown , 但是unknown 不能赋值给任何类型
+*/
 
 export default ProjectScreen;
