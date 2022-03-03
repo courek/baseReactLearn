@@ -67,3 +67,59 @@ export const useDebounce = <T>(value: T, delay?: number) => {
   // 状态在react意味着他需要是响应式的.
   return debounceValue;
 };
+
+//  作业 实现 useArray ---  上面自己实现
+export const useArray = <T>(initialArray: T[]) => {
+  // 返回的value 是个数组
+
+  // let array = { ...value };
+  type Item = keyof T; // 获取数组的子项类型
+  // type arrayItem = Item[number]
+  interface ReObject {
+    value: T[];
+    clear: () => void;
+    removeIndex: (number: number) => void;
+    add: (item: T) => void;
+  }
+  let [presionArray, setPresionArray] = useState(initialArray);
+  const [result, setResult] = useState<ReObject>({
+    value: presionArray,
+    clear: () => {
+      presionArray = [];
+      setPresionArray(presionArray);
+    },
+    removeIndex: (number) => {
+      presionArray.splice(number, 1);
+      setPresionArray([...presionArray]);
+    },
+    add: (item: T) => {
+      presionArray.push(item);
+      setPresionArray([...presionArray]);
+    },
+  });
+
+  useEffect(() => {
+    setResult({
+      ...result,
+      value: presionArray,
+    });
+    // console.log(presionArray, "// 肯定要坚挺这个的");
+  }, [presionArray]);
+  return result;
+};
+
+//  作业 实现 useArray ---  跟学实现,对比差别...  很简单,是我想得太复杂..  果然还是不熟悉react
+export const useArray2 = <T>(initialArray: T[]) => {
+  const [value, setValue] = useState(initialArray);
+  return {
+    value,
+    setValue,
+    add: (item: T) => setValue([...value, item]),
+    clear: () => setValue([]),
+    removeIndex: (index: number) => {
+      const copy = [...value]; // 浅拷贝
+      copy.splice(index, 1);
+      setValue(copy);
+    },
+  };
+};
