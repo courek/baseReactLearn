@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { List } from "./list";
 import { SearchPanel } from "./search-panel";
-import { useDebounce } from "../../utils";
+import { cleanObject, useDebounce } from "../../utils";
 import { TsReactTest } from "./test-array";
+import { useHttp } from "utils/http";
 
 // 给json-server 配置中间件.  因为像 api/login  这种接口就不满足restapi 形式
 
@@ -19,22 +20,31 @@ const ProjectScreen = () => {
   const [users, setUsers] = useState([]);
   const [list, setList] = useState([]);
 
+  // 使用集成,和封装了的 fetch hook
+  const client = useHttp();
+
   useEffect(() => {
-    fetch(`${apiUrl}/projects`).then(async (response) => {
-      if (response.ok) {
-        setList(await response.json());
-      }
-    });
+    // client(["projects", { data: cleanObject(debounceParams) }]); // 因为需要一个元组  所以才说是需要一个函数/  那如果不想要这种元组的传值方式.
+    // 怎么办? 就是在 [endpoint, config]: Parameters<typeof httpRequst> 的时候用 ... 进行解构.  这样就可以了
+
+    client("projects", { data: cleanObject(debounceParams) }).then(setList); //then(result=> setList(result))  // 直接setList就行,不用函数再调用
+
+    // fetch(`${apiUrl}/projects`).then(async (response) => {
+    //   if (response.ok) {
+    //     setList(await response.json());
+    //   }
+    // });
     //// @ts-ignore --- 加上这句可以忽略检查
   }, [debounceParams]); // 后面[param] 的意思是,当param改变的时候,才会去触发 useEffect 这个hook
 
   // 初始化 users
   useEffect(() => {
-    fetch(`${apiUrl}/users`).then(async (response) => {
-      if (response.ok) {
-        setUsers(await response.json());
-      }
-    });
+    client("users", {}).then(setUsers);
+    // fetch(`${apiUrl}/users`).then(async (response) => {
+    //   if (response.ok) {
+    //     setUsers(await response.json());
+    //   }
+    // });
   }, []);
 
   return (

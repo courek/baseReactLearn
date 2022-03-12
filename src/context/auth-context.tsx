@@ -3,6 +3,8 @@ import React from "react";
 
 import * as auth from "auth-provider";
 import { User } from "screens/project-list/search-panel";
+import { httpRequst } from "utils/http";
+import { useMount } from "utils";
 
 interface AuthForm {
   username: string;
@@ -20,9 +22,22 @@ const AuthContext = React.createContext<
 >(undefined);
 AuthContext.displayName = "AuthContext"; // 其实实际项目中没啥作用的
 
+// bootsterap 就是启动初始化的意思 - -,
+// 作用就是初始化user
+const bootsterapUser = async () => {
+  let user = null;
+  const token = auth.getToken();
+  if (token) {
+    const data = await httpRequst("me", { token });
+    user = data.user;
+  }
+  return user;
+};
+
 // 跟写vuex 的modules 差不多意思
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null); //传入范型
+  //  但是这样会有问题, 就是刷新就会把user 变成了null  所以需要user的持久化才行.
 
   // 就是引入(全部+改名),然后直接赋值  调用
   // 登陆
@@ -33,6 +48,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   // 登出
   const logout = () => auth.logout().then(() => setUser(null)); // 作用就是登出清空
+
+  // 整个app 加载的时候 -- 也就是说这个页面 跟vue里面的 permission.js 差不多
+  useMount(() => {
+    bootsterapUser().then(setUser);
+  });
 
   return (
     // 写完 children 之后记得给他.
