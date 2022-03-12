@@ -1,7 +1,7 @@
 import { useAuth } from "context/auth-context";
-import { FormEvent, FormEventHandler } from "react";
+import { FormEvent } from "react";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+// const apiUrl = process.env.REACT_APP_API_URL;
 
 // 鸭子类型,面向接口编程. 而不是面向对象编程. 也就是我需要 abc 你给我abcdefg 也行. 满足我需要的就可以,多出来的无所谓(不管是否使用到).
 export const LoginScreen = () => {
@@ -68,7 +68,7 @@ export const LoginScreen = () => {
         <label htmlFor="password">密码</label>
         <input type="password" name="" id={"password"} />
       </div>
-      <button type={"submit"}>登录/目前注册</button>
+      <button type={"submit"}>登 录</button>
     </form>
   );
 };

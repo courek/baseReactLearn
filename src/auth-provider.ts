@@ -1,5 +1,6 @@
 // 一些操作 jwt的 函数
 // 在真实环境中,如果使用 firebase 这种第三方auth服务的话,本文件不需要开发者开发.
+// 不过存储 token这种东西基本还是要处理的
 
 import { User } from "./screens/project-list/search-panel";
 

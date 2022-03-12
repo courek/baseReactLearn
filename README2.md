@@ -28,3 +28,8 @@ revert commit 回退
 //screens 文件夹 包含页面级别的代码
 
 DRY 全称：Don't Repeat Yourself （摘自 wikipedia），是指编程过程中不写重复代码，将能够公共的部分抽象出来，封装成工具类或者用“abstraction”类来抽象公有的东西，降低代码的耦合性，这样不仅提高代码的灵活性、健壮性以及可读性，也方便后期的维护或者修改。
+
+//unauthenticated-app 是分为未登录状态的 app
+// authenticated-app 是登陆状态的 app
+
+// react 需要 node 高级一点的版本才行,16.xx.x 那种
