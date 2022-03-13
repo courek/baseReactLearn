@@ -1,38 +1,14 @@
-.App {
-  text-align: center;
+/* 虽然css-in-js 可以一定程度上规避全局样式,但是全局样式也不能说就是不用了 */
+
+html {
+  /* 因为打算使用rem  em和rem 像是同卵双胞胎一样都是相对单位*/
+  /* em 是相对于父级元素的font-size rem 相对于根节点html的font-size*/
+  /* r 的就是root的意思   所以 rem  就是基于root的em */
+  /* 16 * 62.5% = 10px   所以设置1rem ===10px */
+  font-size: 62.5%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* 然后就安装 @emotion */
+html body #root .App {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

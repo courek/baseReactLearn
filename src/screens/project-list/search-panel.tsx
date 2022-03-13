@@ -1,5 +1,8 @@
 // 所有之前知识点记录 看js. ts部分之后,删除历史,只记录ts部分的笔记
 
+import { Input, Select } from "antd";
+import { Form } from "antd";
+
 // 写组件给别人使用  告诉别人需要什么,那就等于是写说明  因此要加上接口.
 export interface User {
   id: number;
@@ -22,9 +25,16 @@ interface SearchPanelProps {
 // 传参过来后 子组件接收
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
   return (
-    <form action="">
-      <div>
-        <input
+    <Form>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "300px",
+          margin: "10px auto",
+        }}
+      >
+        <Input
           type="text"
           value={param.name}
           onChange={(event) =>
@@ -34,23 +44,23 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
             })
           }
         />
-        <select
+        <Select
           value={param.personId}
-          onChange={(event) =>
+          onChange={(value) =>
             setParam({
               ...param,
-              personId: event.target.value,
+              personId: value,
             })
           }
         >
-          <option value={""}>负责人</option>
+          <Select.Option value={""}>负责人</Select.Option>
           {users.map((user) => (
-            <option value={user.id} key={user.id}>
+            <Select.Option value={user.id} key={user.id}>
               {user.name}
-            </option>
+            </Select.Option>
           ))}
-        </select>
+        </Select>
       </div>
-    </form>
+    </Form>
   );
 };

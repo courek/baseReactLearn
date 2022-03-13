@@ -55,7 +55,7 @@ const ProjectScreen = () => {
         users={users}
       ></SearchPanel>
       <List list={list} users={users}></List>
-      <TsReactTest></TsReactTest>
+      {/* <TsReactTest></TsReactTest> */}
     </div>
   );
 };
