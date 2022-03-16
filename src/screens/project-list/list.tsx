@@ -1,6 +1,7 @@
 // 新版本之后 不用每个页面都引入React了
 
 import { Table } from "antd";
+import dayjs from "dayjs";
 import { User } from "./search-panel";
 
 interface ListItem {
@@ -18,6 +19,7 @@ interface ListProps {
 }
 
 // 换成antd 带有的表格组件
+// 还要安装一个处理时间的库 dayjs
 export const List = ({ users, list }: ListProps) => {
   return (
     <Table
@@ -29,12 +31,26 @@ export const List = ({ users, list }: ListProps) => {
           sorter: (a, b) => a.name.localeCompare(b.name), // 按字母 顺序排序 localeCompare 可以排序中文字符
         },
         {
+          title: "部门",
+          dataIndex: "organization",
+        },
+        {
           title: "负责人", // 没办法直接使用 dataindex 显示
           render(value, item) {
             return (
               <span>
                 {users.find((user) => user.id === item.personId)?.name ||
                   "未知"}
+              </span>
+            );
+          },
+        },
+        {
+          title: "创建时间",
+          render(value, item) {
+            return (
+              <span>
+                {item.created ? dayjs(item.created).format("YYYY-MM-DD") : "无"}
               </span>
             );
           },

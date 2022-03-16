@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+// 文件头部加上这句  才能使用emotion的css={{}}
+//指定成这种文件才能  用css={{}} 这种方式替换 style={{}}  也就是用emotion代替react 自带的style  因为emotion比较强大
 // 所有之前知识点记录 看js. ts部分之后,删除历史,只记录ts部分的笔记
 
 import { Input, Select } from "antd";
@@ -25,16 +28,16 @@ interface SearchPanelProps {
 // 传参过来后 子组件接收
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
   return (
-    <Form>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          width: "300px",
-          margin: "10px auto",
-        }}
-      >
+    <Form
+      layout={"inline"}
+      css={{
+        marginTop: "1rem",
+        marginBottom: "1rem",
+      }}
+    >
+      <Form.Item>
         <Input
+          placeholder="项目名"
           type="text"
           value={param.name}
           onChange={(event) =>
@@ -44,6 +47,8 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
             })
           }
         />
+      </Form.Item>
+      <Form.Item>
         <Select
           value={param.personId}
           onChange={(value) =>
@@ -60,7 +65,7 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
             </Select.Option>
           ))}
         </Select>
-      </div>
+      </Form.Item>
     </Form>
   );
 };

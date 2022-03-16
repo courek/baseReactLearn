@@ -4,6 +4,7 @@ import { SearchPanel } from "./search-panel";
 import { cleanObject, useDebounce } from "../../utils";
 import { TsReactTest } from "./test-array";
 import { useHttp } from "utils/http";
+import styled from "@emotion/styled";
 
 // 给json-server 配置中间件.  因为像 api/login  这种接口就不满足restapi 形式
 
@@ -48,7 +49,8 @@ const ProjectScreen = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
+      <h1>项目列表</h1>
       <SearchPanel
         param={param}
         setParam={setParam}
@@ -56,9 +58,15 @@ const ProjectScreen = () => {
       ></SearchPanel>
       <List list={list} users={users}></List>
       {/* <TsReactTest></TsReactTest> */}
-    </div>
+    </Container>
   );
 };
+
+// 结构太贴边-- 加边距
+
+const Container = styled.div`
+  padding: 3.2rem;
+`;
 
 // 元组形式的数组的好处就是 长度固定,所以解构的时候可以随便改名字
 /* 比如
