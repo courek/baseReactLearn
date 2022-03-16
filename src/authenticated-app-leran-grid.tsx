@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Button } from "antd";
-import { Row } from "components/lib";
 import { useAuth } from "context/auth-context";
 import ProjectScreen from "screens/project-list";
 
@@ -9,13 +8,8 @@ export const AuthenticatedApp = () => {
   const { logout } = useAuth();
   return (
     <Container>
-      {/* 布尔类型,不写值  只要有这个属性,就能为true */}
-      <Header between>
-        <HeaderLeft gap={true}>
-          {/* 假设你使用了headerItem 但是不想用 h3标签了.  可以 headerItem as={'div'}  就会变成div了,像范型  但是就是感觉不是很好的方案*/}
-          {/* 所以使用 emotion 带有的变量 */}
-          {/* 在 HeaderLeft 定义的style 中传入Row (自己写的)*/}
-          {/*  然后调用 HeaderLeft 的时候就可以传入gap={ ... 你定义的属性/变量 } */}
+      <Header>
+        <HeaderLeft>
           <h3>Logo</h3>
           <h3>项目</h3>
           <h3>用户</h3>
@@ -26,12 +20,12 @@ export const AuthenticatedApp = () => {
           </Button>
         </HeaderRight>
       </Header>
-      {/* <Nav>nav</Nav>  当前业务不需要 只是拿来学习grid布局 */}
+      <Nav>nav</Nav>
       <Main>
         <ProjectScreen></ProjectScreen>
       </Main>
-      {/* <Aside>aside</Aside>
-      <Footer>footer</Footer> */}
+      <Aside>aside</Aside>
+      <Footer>footer</Footer>
     </Container>
   );
 };
@@ -49,61 +43,49 @@ export const AuthenticatedApp = () => {
 //   height: calc(100vh - 6rem);
 // `;
 
-// const headerItem = styled.h3`
-//   margin-left: 12px;
-// `;
-
-const Header = styled(Row)`
-  /* grid-area: header; */
-  /* display: flex;
-  flex-direction: row;
-  align-items: center; */
-  /* 统一继承了,抽离出来的公共样式了 */
+const Header = styled.header`
+  grid-area: header;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  /* justify-content: space-between;  顺便把这句抽离了 */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
-//定义header相关的元素 -- 因为要使用 Row(自己.非antd)
-// const HeaderLeft = styled.div`
-//   flex: 1;
-//   min-width: 0;
-//   display: flex;
-// `;
-
-// 然后 相关的 有display:flex  row 类型的就都可以直接  styled(Row)  等于是scss中的 继承了,少写那些display
-const HeaderLeft = styled(Row)``; //然后继续页面上调用就行,反撇号还是要保留的 不然就不是 css-in-js了
-
+//定义header相关的元素
+const HeaderLeft = styled.div`
+  flex: 1;
+  min-width: 0;
+  display: flex;
+`;
 const HeaderRight = styled.div`
   width: 10rem;
 `;
 
 const Main = styled.main`
-  /* grid-area: main; */
+  grid-area: main;
 `;
-// const Nav = styled.nav`
-//   grid-area: nav;
-// `;
-// const Aside = styled.aside`
-//   grid-area: aside;
-// `;
-// const Footer = styled.footer`
-//   /* 用来给子元素起名字 , 随便取,只是有意义的名字好理解*/
-//   grid-area: footer;
-// `;
+const Nav = styled.nav`
+  grid-area: nav;
+`;
+const Aside = styled.aside`
+  grid-area: aside;
+`;
+const Footer = styled.footer`
+  /* 用来给子元素起名字 , 随便取,只是有意义的名字好理解*/
+  grid-area: footer;
+`;
 
 // grid 容器
 const Container = styled.div`
   display: grid;
   /* 指从上到下  header/footer  高6rem  中间1fr 就表示减去两个6rem是多少就是多少  总高度又设置了 100vh */
-  /* 描述了三行 */
-  grid-template-rows: 6rem 1fr 6rem;
-  /* 描述了三列  分别宽20rem 1fr 20rem*/
-  /* grid-template-columns: 20rem 1fr 20rem; */
+  grid-template-rows: 6rem 1fr 6rem; /* 描述了三行 */
+  grid-template-columns: 20rem 1fr 20rem; /* 描述了三列  分别宽20rem 1fr 20rem*/
   /* 最强大的属性,最难理解  就是表示子元素是怎么排列的 , 不需要逗号*/
-  /* 如果没有 这个属性, 那么子元素的 grid-area: main; 也去掉,不然还是会生效*/
-  /* grid-template-areas:
+  grid-template-areas:
     "header header header"
     "nav main aside"
-    "footer footer footer"; */
+    "footer footer footer";
   height: 100vh;
   /* 加间距 */
   /* grid-gap: 10rem; */
