@@ -48,10 +48,11 @@ export const AuthenticatedApp = () => {
           >
             {/* Dropdown 里面要显示的内容 */}
             <a
-              href="#"
+              href="#11"
               onClick={(e) => {
-                // e.defaultPrevented();
-                console.log(e);
+                // e.defaultPrevented()  //也存在  只是表面了 是否调用了preventDefault() 也就是检查是否阻止了默认?
+                return e.preventDefault();
+                // console.log(e);
               }}
             >
               Hi,{user?.name}

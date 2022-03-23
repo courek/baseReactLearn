@@ -60,7 +60,7 @@ export const httpRequst = async (
       } else {
         // 为什么要手动抛出错误? fetch 会自动抛出吗? 不会,所以需要你手动抛出异常,方便自己捕获服务端给我们的异常,用去catch监听. fetch只有断网,网络连接失败的时候 fetch 才会抛出异常
         // 看文档. XMLHttpRequest 才会啥异常都抛出
-        Promise.reject(data);
+        return Promise.reject(data);
       }
     });
 };

@@ -1,26 +1,30 @@
 // 新版本之后 不用每个页面都引入React了
 
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { User } from "./search-panel";
 
-interface ListItem {
+export interface ListItem {
   id: number;
   name: string;
-  personId: number;
+  personId: string;
   pin: boolean;
   organization: string;
   created: number;
 }
 
-interface ListProps {
+// 定义列表的时候让他继承所有table的所有属性.
+interface ListProps extends TableProps<ListItem> {
   users: User[];
-  list: ListItem[];
+  // list: ListItem[];  // 因为直接使用 table的属性了  所以不需要list了  table中有一个 dataSource
+  // 然后之前的 dataSource ={list}  就可以删掉了.
 }
 
 // 换成antd 带有的表格组件
 // 还要安装一个处理时间的库 dayjs
-export const List = ({ users, list }: ListProps) => {
+// 修改之后 这里的props 就等于是 type PropType =  Omit<ListProps,'users'>
+// 这样剩下的都是 TableProps  所以只要是 TableProps 支持的属性,你都可以直接传进来了 不用自定义一个loading然后传入
+export const List = ({ users, ...props }: ListProps) => {
   return (
     <Table
       pagination={false}
@@ -39,7 +43,7 @@ export const List = ({ users, list }: ListProps) => {
           render(value, item) {
             return (
               <span>
-                {users.find((user) => user.id === item.personId)?.name ||
+                {users.find((user) => user.id === +item.personId)?.name ||
                   "未知"}
               </span>
             );
@@ -56,7 +60,7 @@ export const List = ({ users, list }: ListProps) => {
           },
         },
       ]}
-      dataSource={list}
+      {...props}
     >
       {" "}
     </Table>
