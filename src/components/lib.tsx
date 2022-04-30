@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Spin, Typography } from "antd";
 
 /*
  用emotion 变量 做了一个很像react component组件的东西
@@ -54,3 +55,24 @@ export const Row = styled.div<{
 //         : undefined};
 //   }
 // `;
+
+// 创建一个全屏的div
+const FullPage = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+// 创建一个全局的loading 组件
+export const FullPageLoading = () => (
+  <FullPage>
+    <Spin size={"large"} />
+  </FullPage>
+);
+
+// 创建一个全局的错误提示信息
+export const FullPageErrorFallBack = ({ error }: { error: Error | null }) => (
+  <FullPage>
+    <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
+  </FullPage>
+);

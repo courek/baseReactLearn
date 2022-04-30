@@ -5,6 +5,8 @@ import * as auth from "auth-provider";
 import { User } from "screens/project-list/search-panel";
 import { httpRequst } from "utils/http";
 import { useMount } from "utils";
+import { useAsync } from "utils/use-async";
+import { FullPageErrorFallBack, FullPageLoading } from "components/lib";
 
 interface AuthForm {
   username: string;
@@ -36,12 +38,22 @@ const bootsterapUser = async () => {
 
 // 跟写vuex 的modules 差不多意思
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null); //传入范型
+  // const [user, setUser] = useState<User | null>(null); //传入范型
   //  但是这样会有问题, 就是刷新就会把user 变成了null  所以需要user的持久化才行.
 
   // 就是引入(全部+改名),然后直接赋值  调用
   // 登陆
   //   const login = (form: AuthForm) => auth.login(form).then((user) => setUser(user));  // 这种可以直接省略的  函数式编程嘛
+
+  const {
+    data: user,
+    error,
+    isLoading,
+    isIdle,
+    isError,
+    run,
+    setData: setUser,
+  } = useAsync<User | null>();
 
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   // 注册
@@ -50,9 +62,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => auth.logout().then(() => setUser(null)); // 作用就是登出清空
 
   // 整个app 加载的时候 -- 也就是说这个页面 跟vue里面的 permission.js 差不多
+  // --- 因为做了一个公共的loading useAsync  所以用那个来进行改造一下
+
+  // 旧的方法模式
+  // useMount(() => {
+  //   bootsterapUser().then(setUser);
+  // });
+
+  // 使用useAsync 改造
   useMount(() => {
-    bootsterapUser().then(setUser);
+    run(bootsterapUser());
   });
+
+  // 当开始的时候或者加载的时候
+  if (isIdle || isLoading) {
+    return <FullPageLoading />;
+  }
+
+  // 如果出现错误 -- 提示一个全局的错误信息
+  if (isError) {
+    return <FullPageErrorFallBack error={error} />;
+  }
 
   return (
     // 写完 children 之后记得给他.
