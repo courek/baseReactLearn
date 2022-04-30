@@ -15,12 +15,22 @@ const defaultInitialState: State<null> = {
   error: null,
 };
 
+// 也就是添加一个 配置功能
+const defaultConfig = {
+  throwOnError: false,
+};
+
 // 用户可以自己传入的initialState
-export const useAsync = <T>(initialState?: State<T>) => {
+export const useAsync = <T>(
+  initialState?: State<T>,
+  initialConfig?: typeof defaultConfig
+) => {
   const [state, setState] = useState<State<T>>({
     ...defaultInitialState,
     ...initialState,
   });
+
+  const config = { ...defaultConfig, initialConfig }; // 这样写在后面是 可以用自己传入的值来进行覆盖的
 
   // 设置数据用的
   const setData = (data: T) =>
@@ -51,8 +61,14 @@ export const useAsync = <T>(initialState?: State<T>) => {
         return data;
       })
       .catch((error) => {
-        // 遇到了异常
+        // 遇到了异常 -- 会消化异常,第一个catch碰到异常之后 后面的所有catch都不会再收到异常
+        // 如果不主动抛出,外面是不会再能接收到异常的
         setError(error);
+        //  所以光 return error 是不行的  需要 Promise.reject(error)
+        // 但是我们不能每次都抛出异常 有时候error是很好用的 所以就需要加上一个配置 来判断什么时候需要什么
+        if (config.throwOnError) {
+          return Promise.reject(error);
+        }
         return error;
       });
   };

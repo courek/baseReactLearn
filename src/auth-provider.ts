@@ -27,7 +27,8 @@ export const login = (data: { username: string; password: string }) => {
       return handlerUserResponse(await response.json());
     } else {
       //  Promise.reject 跟直接输出一个Error类型的错误相似
-      return Promise.reject(data);
+      // console.log(await response.json(), "data");
+      return Promise.reject(await response.json());
     }
   });
 };
@@ -44,7 +45,7 @@ export const register = (data: { username: string; password: string }) => {
     if (response.ok) {
       return handlerUserResponse(await response.json());
     } else {
-      return Promise.reject(data);
+      return Promise.reject(await response.json());
     }
   });
 };

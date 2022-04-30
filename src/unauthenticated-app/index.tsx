@@ -1,7 +1,7 @@
 // 这个文件夹下,放置的是未登录状态下的app  也就是不用登录就能看到的那种
 // 就比如 登录,注册页面之类的.
 
-import { Button, Card, Divider } from "antd";
+import { Button, Card, Divider, Typography } from "antd";
 import { useState } from "react";
 import { LoginScreen } from "./login";
 import { RegisterScreen } from "./register";
@@ -72,6 +72,10 @@ export const UnauthenticatedApp = () => {
 
   const [isRegister, setIsRegister] = useState(false);
 
+  //新定义一个状态,来判断提示登录错误的那种  -- 也就是在登录或者注册的时候抛出来的错误
+  // 所以要给这个 RegisterScreen和LoginScreen 添加一个监听错误的事件
+  const [error, setError] = useState<Error | null>(null);
+
   return (
     // <div style={{ display: "flex", justifyContent: "center", }} > </div>  // 然后用emotion的形式去修改行内样式
     // emotion 形式,当组件来用就好了.  但是这个是自己加的独立div样式
@@ -82,7 +86,14 @@ export const UnauthenticatedApp = () => {
 
       <ShadowCrad>
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
-        {isRegister ? <RegisterScreen /> : <LoginScreen />}
+        {error ? (
+          <Typography.Text type={"danger"}>{error.message}</Typography.Text>
+        ) : null}
+        {isRegister ? (
+          <RegisterScreen onError={setError} />
+        ) : (
+          <LoginScreen onError={setError} />
+        )}
         <Divider />
         <a href="/#" onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? "已经有账号了?直接登录" : "没有账号?去注册"}
