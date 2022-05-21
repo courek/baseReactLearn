@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { List, ListItem } from "./list";
 import { SearchPanel } from "./search-panel";
-import { cleanObject, useDebounce, useMount } from "../../utils";
+import {
+  cleanObject,
+  useDebounce,
+  useDocumentTitle,
+  useMount,
+} from "../../utils";
 // import { TsReactTest } from "./test-array";
 import { useHttp } from "utils/http";
 import styled from "@emotion/styled";
@@ -21,6 +26,8 @@ const ProjectScreen = () => {
     name: "",
     personId: "",
   });
+
+  useDocumentTitle("项目列表"); // 如果没有路由管理的话就直接这样使用就好了
 
   const debounceParams = useDebounce(param, 500); // 函数截流的 hook 结合体
 

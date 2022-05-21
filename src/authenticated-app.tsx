@@ -10,9 +10,18 @@ import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg"; // �
 export const AuthenticatedApp = () => {
   // 有登录 所以也有登出
   const { logout, user } = useAuth();
+
+  // const value: any = undefined; // 故意写一个错误
+
   return (
     <Container>
+      {/* 故意来读取一个错误,来实验异常捕获 */}
+      {/*  react 在渲染阶段,如果出现了渲染异常 那么整个组件树都会被卸载掉*/}
+      {/* 所以需要设置错误边界,这样才会被react捕获 */}
       {/* 布尔类型,不写值  只要有这个属性,就能为true */}
+      {/* <div>
+        <div>{value.name || "ani嘛?"}</div>
+      </div> */}
       <Header between>
         <HeaderLeft gap={true}>
           {/* 假设你使用了headerItem 但是不想用 h3标签了.  可以 headerItem as={'div'}  就会变成div了,像范型  但是就是感觉不是很好的方案*/}

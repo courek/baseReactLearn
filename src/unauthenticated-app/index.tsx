@@ -83,6 +83,16 @@ export const UnauthenticatedApp = () => {
     <Container>
       <Header />
       <Background />
+      {/* 处理错误边际,也就是边际异常等等  请求已经做了,但是现在如果是点击出现错误的异常处理呢? */}
+      {/* 主要是处理渲染的时候出现了错误  抛出 */}
+      {/* 要做的是直接提示错误的具体位置  而不是靠编辑器错误提示  也就是要做一个错误收集?验证? 也就是生产模式,也会到error错误处理页面,大概意思 */}
+      {/* <Button
+        onClick={() => {
+          throw new Error("点击抛出一个异常");    //error-boundary  不会监听到事件的错误,只会对渲染类型的错误进行 监听,毕竟是作为顶级组件嵌套使用的
+        }}
+      >
+        抛出异常
+      </Button> */}
 
       <ShadowCrad>
         <Title>{isRegister ? "请注册" : "请登录"}</Title>

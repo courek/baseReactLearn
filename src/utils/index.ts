@@ -123,3 +123,23 @@ export const useArray2 = <T>(initialArray: T[]) => {
     },
   };
 };
+
+// 增加一个自动修改 文档标题
+export const useDocumentTitle = (
+  title: string,
+  keepOnUnmount: boolean = true // 表示页面卸载的时候
+) => {
+  const oldTitle = document.title;
+
+  useEffect(() => {
+    document.title = title;
+  }, [title, oldTitle, keepOnUnmount]);
+
+  useEffect(() => {
+    return () => {
+      if (!keepOnUnmount) {
+        document.title = oldTitle;
+      }
+    };
+  }, []);
+};

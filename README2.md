@@ -33,3 +33,8 @@ DRY 全称：Don't Repeat Yourself （摘自 wikipedia），是指编程过程�
 // authenticated-app 是登陆状态的 app
 
 // react 需要 node 高级一点的版本才行,16.xx.x 那种
+
+//- 课程第八章 1
+// 动态生成页面标题 也就是 document.title 每个页面是不一样的(文档标题)
+// 方式 1 使用动态的 hook 来动态改变,文档标题 闭包在 react hook 中的坑
+// 方式 2 使用 react-helmet 详情看文档-- 缺点就是每个页面都要写一份 也是挺麻烦的

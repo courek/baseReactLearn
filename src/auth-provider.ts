@@ -27,7 +27,7 @@ export const login = (data: { username: string; password: string }) => {
       return handlerUserResponse(await response.json());
     } else {
       //  Promise.reject 跟直接输出一个Error类型的错误相似
-      // console.log(await response.json(), "data");
+      console.log(await response.json(), "data");
       return Promise.reject(await response.json());
     }
   });

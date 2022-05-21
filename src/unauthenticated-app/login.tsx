@@ -1,7 +1,7 @@
 import { useAuth } from "context/auth-context";
 
 // 异步引入组件
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
 import { LongButton } from "unauthenticated-app";
 import { useAsync } from "utils/use-async";
 
