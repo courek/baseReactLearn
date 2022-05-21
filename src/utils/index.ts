@@ -1,6 +1,6 @@
 // 在一个函数里,改变传入的对象本身是不好的, 也就是写函数的时候,不要污染传入的对象.
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // 自己写的
 // const cleanObject = (object) => {
@@ -125,21 +125,38 @@ export const useArray2 = <T>(initialArray: T[]) => {
 };
 
 // 增加一个自动修改 文档标题
+// react hook  和闭包, hook 与闭包经典的坑
 export const useDocumentTitle = (
   title: string,
   keepOnUnmount: boolean = true // 表示页面卸载的时候
 ) => {
-  const oldTitle = document.title;
+  // const oldTitle = document.title; // 这里因为 useEffect 每次都更新了依赖所以需要 useRef进行存储
+  // useRef 保存的值,在组件的整个声明周期中都是不会变化的.
+
+  const oldTitle = useRef(document.title).current; // .current 是读取的值,  vue3的ref .value就是抄的这个
+  // 也就是说 useRef 是可以持久化变量的
+
+  //页面加载时: oldTitle === 旧title 'React App'  // 这个部分的注释是在没有使用 useRef 的情况下. 使用了useRef 就正常流程了
+  // 加载后: oldTitle === 新title (传入的title)
 
   useEffect(() => {
     document.title = title;
   }, [title, oldTitle, keepOnUnmount]);
 
+  // useMount()   //这个是开始时会执行
+
+  // 这个是渲染都会执行?
   useEffect(() => {
     return () => {
       if (!keepOnUnmount) {
+        //卸载时,如果不指定依赖,读到的就是旧的title
         document.title = oldTitle;
       }
     };
-  }, []);
+    // 但是这里添加依赖之后,就没办法保存旧的title了   所以使用react内部支持的 useRef
+    // useRef 能存储,并且 修改 ref 的值是不会引发组件的重新 render
+  }, [oldTitle, keepOnUnmount]); // hook中返回函数  容易产生闭包问题,记得添加依赖项
+  // 也就是说,useEffect 内部需要什么使用什么变量,尽量去监听这几个变量(添加依赖)  不然可能会造成错误
 };
+
+// 上述这些是能实现,但是对接手代码的人不友好(水平不够,理解不了闭包的那种)  所以改成直接点的, 如下:

@@ -13,6 +13,7 @@ import styled from "@emotion/styled";
 import logo from "assets/logo.svg";
 import left from "assets/left.svg";
 import right from "assets/right.svg";
+import { useDocumentTitle } from "utils";
 
 const Header = styled.header`
   background: url(${logo}) no-repeat center;
@@ -75,6 +76,8 @@ export const UnauthenticatedApp = () => {
   //新定义一个状态,来判断提示登录错误的那种  -- 也就是在登录或者注册的时候抛出来的错误
   // 所以要给这个 RegisterScreen和LoginScreen 添加一个监听错误的事件
   const [error, setError] = useState<Error | null>(null);
+
+  useDocumentTitle("请登录注册以继续");
 
   return (
     // <div style={{ display: "flex", justifyContent: "center", }} > </div>  // 然后用emotion的形式去修改行内样式
