@@ -26,6 +26,7 @@ export const LoginScreen = ({ onError }: ErrorType) => {
     username: string;
     password: string;
   }) => {
+    console.log(values, "values");
     run(login(values)).catch(onError); // 因为这样写就没办法拿到报错信息了--
     // 把因为useAsync内部自己消化了一次catch  加上手动抛出错误后就可以这样使用了
 

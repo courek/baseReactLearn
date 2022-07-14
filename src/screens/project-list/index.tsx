@@ -21,7 +21,7 @@ import { useUsers } from "utils/user";
 
 // 处理 error错误 和添加 loading  --- 也就是处理在react中的异步问题
 
-const ProjectScreen = () => {
+const ProjectListScreen = () => {
   const [param, setParam] = useState({
     name: "",
     personId: "",
@@ -132,4 +132,4 @@ const Container = styled.div`
   任何类型都可以赋值给 unknown , 但是unknown 不能赋值给任何类型
 */
 
-export default ProjectScreen;
+export default ProjectListScreen;

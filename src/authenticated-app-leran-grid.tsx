@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Button } from "antd";
 import { useAuth } from "context/auth-context";
-import ProjectScreen from "screens/project-list";
+import ProjectListScreen from "screens/project-list";
 
 export const AuthenticatedApp = () => {
   // 有登录 所以也有登出
@@ -22,7 +22,7 @@ export const AuthenticatedApp = () => {
       </Header>
       <Nav>nav</Nav>
       <Main>
-        <ProjectScreen></ProjectScreen>
+        <ProjectListScreen></ProjectListScreen>
       </Main>
       <Aside>aside</Aside>
       <Footer>footer</Footer>

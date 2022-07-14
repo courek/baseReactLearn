@@ -2,7 +2,19 @@
 
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 import { User } from "./search-panel";
+
+/*
+  react-router 和 react-router-dom的关系类似于
+  react 和react-dom/react-native/react-vr  等等
+
+  react 只处理虚拟计算的,理论的逻辑, 比如state 的状态之类的 / useMount的处理,来怎么去影响我们的虚拟dom树,虚拟dom区别的diff运算等等
+  然后经历一系列的计算得出的结果,就会被react-dom进行消费/  为什么不和起来,因为react-dom只生活在浏览器环境的宿主里.里面充满了dom操作
+
+  以此类推,react-router 和 react-router-dom 也是一个专门处理数据,一个处理结果数据后的渲染.  或者其他环境下的消费
+
+*/
 
 export interface ListItem {
   id: number;
@@ -31,8 +43,13 @@ export const List = ({ users, ...props }: ListProps) => {
       columns={[
         {
           title: "名称",
-          dataIndex: "name",
+          // dataIndex: "name",
           sorter: (a, b) => a.name.localeCompare(b.name), // 按字母 顺序排序 localeCompare 可以排序中文字符
+          // 给名称加一个超链接 所以不能用dataindex  ;
+          render(value, project) {
+            //  因为这个是在Project之后的子路由  所以它会自己拼接上去的
+            return <Link to={project.id + ""}>{project.name}</Link>;
+          },
         },
         {
           title: "部门",

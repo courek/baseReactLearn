@@ -2,19 +2,24 @@ import styled from "@emotion/styled";
 import { Button, Dropdown, Menu } from "antd";
 import { Row } from "components/lib";
 import { useAuth } from "context/auth-context";
-import ProjectScreen from "screens/project-list";
+// import ProjectScreen from "screens/project-list";
 
 // import softwareLogo from "assets/software-logo.svg"; // 这样是直接以img形式去渲染的
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg"; // 这样可以以svg形式去渲染的,做成一个 SoftwareLogo 组件
 
-export const AuthenticatedApp = () => {
+// 配置一下路由
+import { Navigate, Route, Routes } from "react-router";
+import ProjectListScreen from "screens/project-list";
+import ProjectScreen from "screens/project/index";
+
+import { BrowserRouter } from "react-router-dom";
+
+// 2022-07-14  完全把header独立出来,配合react-router使用
+const PageHeader = () => {
   // 有登录 所以也有登出
   const { logout, user } = useAuth();
-
-  // const value: any = undefined; // 故意写一个错误
-
   return (
-    <Container>
+    <>
       {/* 故意来读取一个错误,来实验异常捕获 */}
       {/*  react 在渲染阶段,如果出现了渲染异常 那么整个组件树都会被卸载掉*/}
       {/* 所以需要设置错误边界,这样才会被react捕获 */}
@@ -70,8 +75,58 @@ export const AuthenticatedApp = () => {
         </HeaderRight>
       </Header>
       {/* <Nav>nav</Nav>  当前业务不需要 只是拿来学习grid布局 */}
+    </>
+  );
+};
+
+//    {/* 所有的路由配置都需要一个Routers 包裹起来 */}
+//    <Routes>
+//    {/*
+//      Route 也是一个组件,所以就通过他的props进行配置
+//      这样当匹配到我们的project的时候就会来渲染ProjectScreen 这个组件
+
+//      动态id+什么都可以就用*表示通用字符串
+//    */}
+//    <Route
+//      path={"/project"}
+//      element={<ProjectListScreen></ProjectListScreen>}
+//    ></Route>
+//    <Route
+//      path={"/project/:projectId/*"}
+//      element={<ProjectScreen></ProjectScreen>}
+//    ></Route>
+//  </Routes>
+export const AuthenticatedApp = () => {
+  // const value: any = undefined; // 故意写一个错误
+
+  return (
+    <Container>
+      <PageHeader></PageHeader>
       <Main>
-        <ProjectScreen></ProjectScreen>
+        {/* <ProjectListScreen></ProjectListScreen> */}
+
+        {/* 所有的路由配置都需要一个Routers 包裹起来 */
+        /*
+          Route 也是一个组件,所以就通过他的props进行配置
+          这样当匹配到我们的project的时候就会来渲染ProjectScreen 这个组件
+          动态id+什么都可以就用*表示通用字符串
+          使用react的-router 需要被router全部包裹
+        */}
+        {/* BrowserRouter 教程改名成了 Router 就像我们自己写的 AuthContext  用来进行数据共享, 那需要传递什么内容呢?
+          共享,现在路由的参数是什么,pathname是什么等等
+        */}
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path={"/project"}
+              element={<ProjectListScreen></ProjectListScreen>}
+            ></Route>
+            <Route
+              path={"/project/:projectId/*"}
+              element={<ProjectScreen />}
+            ></Route>
+          </Routes>
+        </BrowserRouter>
       </Main>
       {/* <Aside>aside</Aside>
       <Footer>footer</Footer> */}

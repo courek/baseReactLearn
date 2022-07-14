@@ -38,3 +38,6 @@ DRY 全称：Don't Repeat Yourself （摘自 wikipedia），是指编程过程�
 // 动态生成页面标题 也就是 document.title 每个页面是不一样的(文档标题)
 // 方式 1 使用动态的 hook 来动态改变,文档标题 闭包在 react hook 中的坑
 // 方式 2 使用 react-helmet 详情看文档-- 缺点就是每个页面都要写一份 也是挺麻烦的
+
+// 2022-07-14-- 学习使用 react-router -- 安装 yarn add react-router@6 (表示第几个版本)
+还需要安装 react-router-dom@6 还需要安装 history

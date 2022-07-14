@@ -14,7 +14,7 @@ import { cleanObject, useDebounce } from "../../utils";
 // 希望在静态代码中就能查到错误   于是 TS 就有用了
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const ProjectScreen = () => {
+const ProjectScreenjs = () => {
   const [param, setParam] = useState({
     name: "",
     personId: "",
@@ -68,4 +68,4 @@ const ProjectScreen = () => {
   );
 };
 
-export default ProjectScreen;
+export default ProjectScreenjs;
