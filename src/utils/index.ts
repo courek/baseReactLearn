@@ -160,3 +160,6 @@ export const useDocumentTitle = (
 };
 
 // 上述这些是能实现,但是对接手代码的人不友好(水平不够,理解不了闭包的那种)  所以改成直接点的, 如下:
+
+// 这样写不仅可以重制路由状态,还可以重新刷新我们的页面
+export const resetRoute = () => (window.location.href = window.location.origin);

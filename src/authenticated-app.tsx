@@ -8,11 +8,12 @@ import { useAuth } from "context/auth-context";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg"; // 这样可以以svg形式去渲染的,做成一个 SoftwareLogo 组件
 
 // 配置一下路由
-import { Navigate, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
+import { Navigate, BrowserRouter } from "react-router-dom";
+
 import ProjectListScreen from "screens/project-list";
 import ProjectScreen from "screens/project/index";
-
-import { BrowserRouter } from "react-router-dom";
+import { resetRoute } from "utils";
 
 // 2022-07-14  完全把header独立出来,配合react-router使用
 const PageHeader = () => {
@@ -36,10 +37,16 @@ const PageHeader = () => {
           {/* 这样还是以图片的形式渲染,希望是直接用svg的形式去渲染,因为svg形式可以自定义样式,但是img的形式,渲染了就没办法改变样式了 */}
           {/* <img src={softwareLogo} alt="logo"></img> */}
           {/*  这种形式就是 直接svg渲染了,并且能直接改svg的样式 */}
-          <SoftwareLogo
-            width="18rem"
-            color={"rgba(38,132,255,1)"}
-          ></SoftwareLogo>
+
+          {/* 这块也做一个处理 点击logo能返回到主页 */}
+          {/*  */}
+          <Button onClick={resetRoute} type={"link"}>
+            <SoftwareLogo
+              width="18rem"
+              color={"rgba(38,132,255,1)"}
+            ></SoftwareLogo>
+          </Button>
+
           <h3>项目</h3>
           <h3>用户</h3>
         </HeaderLeft>
@@ -124,6 +131,12 @@ export const AuthenticatedApp = () => {
             <Route
               path={"/project/:projectId/*"}
               element={<ProjectScreen />}
+            ></Route>
+
+            {/* 不能直接这样写 <Navigate to={window.location.pathname + "/project"} />  需要改成如下*/}
+            <Route
+              path="*"
+              element={<Navigate to={"/project"} replace={true}></Navigate>}
             ></Route>
           </Routes>
         </BrowserRouter>
